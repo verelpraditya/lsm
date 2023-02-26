@@ -1,0 +1,41 @@
+is_sementara_keluarga ✔
+no_kk ✔
+alamat_jalan✔
+id_provinsi ✔
+kabupaten ✔
+kecamatan ✔
+desa ✔
+is_sementara_penduduk ✔
+nik ✔
+nama ✔
+tempat_lahir ✔
+tanggal_lahir ✔
+
+id_jen_kel jika perempuan { ✔
+	hamil jika iya {✔
+		is_resti ✔
+		keterangan ✔
+		tgl_hpl ✔
+	}
+}
+
+no_telp ✔
+email ✔
+no_kitas ✔
+no_paspor ✔
+id_agama ✔
+id_goldar ✔
+
+id_pendidikan jika sedang sd/SMP/SMA { ✔
+	is_bsm ✔
+}
+
+id_pendidikan_terakhir ✔
+id_pekerjaan ✔
+id_kewarganegaraan ✔
+id_kompetensi ✔
+id_status_kawin ✔
+id_status_penduduk ✔
+id_status_tinggal ✔
+id_difabilitas ✔
+image_data ✔

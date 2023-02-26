@@ -259,15 +259,16 @@ class C_keluarga extends CI_Controller
 			$email = $this->input->post('email', TRUE);
 			$no_kitas = $this->input->post('no_kitas', TRUE);
 			$no_paspor = $this->input->post('no_paspor', TRUE);
-			$id_rt = $this->input->post('id_rt', TRUE);
-			$id_rw = $this->input->post('id_rw', TRUE);
-			$id_dusun = $this->input->post('id_dusun', TRUE);
+			$id_provinsi = $this->input->post('id_provinsi', TRUE);
+			$kabupaten = $this->input->post('kabupaten', TRUE);
+			$kecamatan = $this->input->post('kecamatan', TRUE);
+			$desa = $this->input->post('desa', TRUE);
 			$id_agama = $this->input->post('id_agama', TRUE);
 			$id_goldar = $this->input->post('id_goldar', TRUE);
 			$id_pendidikan = $this->input->post('id_pendidikan', TRUE);
 			$id_pendidikan_terakhir = $this->input->post('id_pendidikan_terakhir', TRUE);
 			$id_pekerjaan = $this->input->post('id_pekerjaan', TRUE);
-			$id_pekerjaan_ped = $this->input->post('id_pekerjaan_ped', TRUE);
+			// $id_pekerjaan_ped = $this->input->post('id_pekerjaan_ped', TRUE);
 			$id_jen_kel = $this->input->post('id_jen_kel', TRUE);
 			$id_kewarganegaraan = $this->input->post('id_kewarganegaraan', TRUE);
 			$id_kompetensi = $this->input->post('id_kompetensi', TRUE);
@@ -298,40 +299,43 @@ class C_keluarga extends CI_Controller
 
 			/* INSERT HANDLING tbl_penduduk */
 			$dataPenduduk = array(
-				'is_sementara' => $is_sementara_penduduk,
 				'nik' => $nik,
 				'nama' => strtoupper($nama),
 				'tempat_lahir' => strtoupper($tempat_lahir),
 				'tanggal_lahir' => date('Y-m-d', strtotime($tanggal_lahir)),
+				'foto' =>  $path,
 				'no_telp' => $no_telp,
 				'email' => $email,
 				'no_kitas' => $no_kitas,
 				'no_paspor' => $no_paspor,
-				'id_rt' => $id_rt,
-				'id_rw' => $id_rw,
-				'id_dusun' => $id_dusun,
+				'is_sementara' => $is_sementara_penduduk,
+				'id_provinsi' => $id_provinsi,
+				'id_kab_kota' => $kabupaten,
+				'id_kecamatan' => $kecamatan,
+				'id_desa' => $desa,
+				'id_pendidikan' => $id_pendidikan,
+				'is_bsm' => $is_bsm,
 				'id_agama' => $id_agama,
 				'id_goldar' => $id_goldar,
-				'id_pendidikan' => $id_pendidikan,
 				'id_pendidikan_terakhir' => $id_pendidikan_terakhir,
-				'id_pekerjaan' => $id_pekerjaan,
-				'id_pekerjaan_ped' => $id_pekerjaan_ped,
 				'id_jen_kel' => $id_jen_kel,
 				'id_kewarganegaraan' => $id_kewarganegaraan,
+				'id_pekerjaan' => $id_pekerjaan,
+				// 'id_pekerjaan_ped' => $id_pekerjaan_ped,
 				'id_kompetensi' => $id_kompetensi,
 				'id_status_kawin' => $id_status_kawin,
 				'id_status_penduduk' => $id_status_penduduk,
 				'id_status_tinggal' => $id_status_tinggal,
 				'id_difabilitas' => $id_difabilitas,
-				'id_kontrasepsi' => $id_kontrasepsi,
-				'is_bsm' => $is_bsm,
-				'foto' =>  $path,
-				'pendapatan_per_bulan' =>  $pendapatan_per_bulan
+				// 'id_kontrasepsi' => $id_kontrasepsi,
+
+				// 'pendapatan_per_bulan' =>  $pendapatan_per_bulan
 			);
 
-			var_dump($dataPenduduk);
-			die;
+			// print_r($dataPenduduk);
+
 			$this->m_penduduk->insertPenduduk($dataPenduduk);
+
 			/* LOG */
 			$json = json_encode($dataPenduduk);
 			$this->log('simpan_keluarga', 'INSERT', $json, 'tbl_penduduk');
@@ -350,7 +354,7 @@ class C_keluarga extends CI_Controller
 			$id_rw = $this->input->post('id_rw', TRUE);
 			$id_dusun = $this->input->post('id_dusun', TRUE);
 
-			$is_raskin = $this->input->post('is_raskin', TRUE);
+			// $is_raskin = $this->input->post('is_raskin', TRUE);
 			$is_jamkesmas = $this->input->post('is_jamkesmas', TRUE);
 			$is_pkh = $this->input->post('is_pkh', TRUE);
 			$id_kelas_sosial = $this->input->post('id_kelas_sosial', TRUE);
@@ -367,17 +371,19 @@ class C_keluarga extends CI_Controller
 				'is_sementara' => $is_sementara_keluarga,
 				'no_kk' => $no_kk,
 				'alamat_jalan' => strtoupper($alamat_jalan),
-				'id_rt' => $id_rt,
-				'id_rw' => $id_rw,
-				'id_dusun' => $id_dusun,
+				'id_provinsi' => $id_provinsi,
+				'id_kab_kota' => $kabupaten,
+				'id_kecamatan' => $kecamatan,
+				'id_desa' => $desa,
 				'id_kepala_keluarga' => $id_kepala_keluarga,
-				'is_raskin' => $is_raskin,
-				'is_jamkesmas' => $is_jamkesmas,
-				'is_pkh' => $is_pkh,
-				'id_kelas_sosial' => $id_kelas_sosial
+				// 'is_raskin' => $is_raskin,
+				// 'is_jamkesmas' => $is_jamkesmas,
+				// 'is_pkh' => $is_pkh,
+				// 'id_kelas_sosial' => $id_kelas_sosial
 			);
 			$this->m_keluarga->insertKeluarga($data);
 			/* LOG */
+
 			$json = json_encode($data);
 			$this->log('simpan_keluarga', 'INSERT', $json, 'tbl_keluarga');
 			/* END OF LOG */
@@ -398,8 +404,8 @@ class C_keluarga extends CI_Controller
 
 			/* INSERT HANDLING tbl_hub_kel */
 			$data = array(
-				'nama_ayah' => strtoupper($nama_ayah),
-				'nama_ibu' => strtoupper($nama_ibu),
+				// 'nama_ayah' => strtoupper($nama_ayah),
+				// 'nama_ibu' => strtoupper($nama_ibu),
 				'id_penduduk' => $id_penduduk,
 				'id_keluarga' => $id_keluarga,
 				'id_status_keluarga' => $id_status_keluarga
