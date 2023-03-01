@@ -36,19 +36,7 @@ class M_berita extends CI_Model
 	{
 		//Build contents query
 		$this->db->select('*')->from($this->_table);
-		$this->CI->flexigrid->build_query();
-
-		//Get contents
-		$return['records'] = $this->db->get();
-
-		//Build count query
-		$this->db->select("count(id_berita) as record_count")->from($this->_table);
-		$this->CI->flexigrid->build_query(FALSE);
-		$record_count = $this->db->get();
-		$row = $record_count->row();
-
-		//Get Record Count
-		$return['record_count'] = $row->record_count;
+		$return = $this->db->get()->result_array();
 
 		//Return all
 		return $return;

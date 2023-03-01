@@ -507,7 +507,7 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 		} else document.getElementById("bsm").style.display = 'none';
 
 		document.getElementById("lihat").style.display = "block";
-		$(".cropit-image-preview").reload();
+		$(".cropit-image-preview")
 
 
 	});
@@ -515,7 +515,6 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 
 	$("#id_provinsi").change(function() {
 		var id_provinsi = document.getElementById("id_provinsi").value;
-		console.log(id_provinsi)
 
 		$.ajax({
 			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_kabupaten',
@@ -526,25 +525,25 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 			dataType: 'json',
 			success: function(data) {
 				// Kosongkan select kabupaten dan kecamatan
-				// $('#kabupaten').empty();
-				// $('#kecamatan').empty();
+				$('#id_kab_kota').empty();
+				$('#kecamatan').empty();
 
 				// Tampilkan select kabupaten dan reset valuenya menjadi kosong
-				$('#kabupaten').show();
-				// $('#kabupaten').append('<option value="">Pilih Kabupaten/Kota</option>');
+				$('#id_kab_kota').show();
+				$('#id_kab_kota').append('<option value="">Pilih Kabupaten/Kota</option>');
+
 
 				// Tampilkan data kabupaten dalam select
 				$.each(data, function(key, value) {
-					$('#kabupaten').append('<option value="' + value.id_kab_kota + '">' + value.nama_kab_kota + '</option>');
+					$('#id_kab_kota').append('<option value="' + value.id_kab_kota + '">' + value.nama_kab_kota + '</option>');
 				});
 			}
 		});
 	});
 
 	// Ketika select kabupaten diubah, kirim data id_kabupaten ke controller menggunakan AJAX
-	$('#kabupaten').on('change', function() {
+	$('#id_kab_kota').on('change', function() {
 		var id_kab_kota = $(this).val();
-		console.log(id_kab_kota)
 
 		$.ajax({
 			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_kecamatan',
@@ -555,24 +554,23 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 			dataType: 'json',
 			success: function(data) {
 				// Kosongkan select kecamatan
-				// $('#kecamatan').empty();
+				$('#id_kecamatan').empty();
 
 				// Tampilkan select kecamatan dan reset valuenya menjadi kosong
-				$('#kecamatan').show();
-				// $('#kecamatan').append('<option value="">Pilih Kecamatan</option>');
+				$('#id_kecamatan').show();
+				$('#id_kecamatan').append('<option value="">Pilih Kecamatan</option>');
 
 				// Tampilkan data kecamatan dalam select
 				$.each(data, function(key, value) {
-					$('#kecamatan').append('<option value="' + value.id_kecamatan + '">' + value.nama_kecamatan + '</option>');
+					$('#id_kecamatan').append('<option value="' + value.id_kecamatan + '">' + value.nama_kecamatan + '</option>');
 				});
 			}
 		});
 	});
 
 	// Ketika select kabupaten diubah, kirim data id_kabupaten ke controller menggunakan AJAX
-	$('#kecamatan').on('change', function() {
+	$('#id_kecamatan').on('change', function() {
 		var id_kecamatan = $(this).val();
-		console.log(id_kecamatan)
 
 		$.ajax({
 			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_desa',
@@ -583,15 +581,15 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 			dataType: 'json',
 			success: function(data) {
 				// Kosongkan select kecamatan
-				// $('#kecamatan').empty();
+				$('#id_desa').empty();
 
 				// Tampilkan select kecamatan dan reset valuenya menjadi kosong
-				$('#desa').show();
-				// $('#desa').append('<option value="">Pilih desa</option>');
+				$('#id_desa').show();
+				$('#id_desa').append('<option value="">Pilih desa</option>');
 
 				// Tampilkan data desa dalam select
 				$.each(data, function(key, value) {
-					$('#desa').append('<option value="' + value.id_desa + '">' + value.nama_desa + '</option>');
+					$('#id_desa').append('<option value="' + value.id_desa + '">' + value.nama_desa + '</option>');
 				});
 			}
 		});

@@ -670,7 +670,7 @@ class C_penduduk extends CI_Controller
 			//'id_kontrasepsi' => $id_kontrasepsi,
 			'is_bsm' => $is_bsm,
 			'foto' =>  $path,
-			'pendapatan_per_bulan' =>  $pendapatan_per_bulan
+			// 'pendapatan_per_bulan' =>  $pendapatan_per_bulan
 		);
 
 
