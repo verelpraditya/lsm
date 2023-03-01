@@ -30,7 +30,7 @@ class M_keluarga extends CI_Model
 		$this->db->join('ref_rw', 'ref_rw.id_rw = tbl_keluarga.id_rw');
 		$this->db->join('ref_dusun', 'ref_dusun.id_dusun = tbl_keluarga.id_dusun');
 		$this->db->join('ref_status_penduduk', 'tbl_penduduk.id_status_penduduk = ref_status_penduduk.id_status_penduduk');
-		$this->db->where('ref_status_penduduk.deskripsi <>', 'Meninggal');
+		$this->db->where('ref_status_penduduk.deskripsi', 'Meninggal');
 
 
 		$this->CI->flexigrid->build_query();
@@ -45,7 +45,7 @@ class M_keluarga extends CI_Model
 		$this->db->join('ref_rw', 'ref_rw.id_rw = tbl_keluarga.id_rw');
 		$this->db->join('ref_dusun', 'ref_dusun.id_dusun = tbl_keluarga.id_dusun');
 		$this->db->join('ref_status_penduduk', 'tbl_penduduk.id_status_penduduk = ref_status_penduduk.id_status_penduduk');
-		$this->db->where('ref_status_penduduk.deskripsi <>', 'Meninggal');
+		$this->db->where('ref_status_penduduk.deskripsi', 'Meninggal');
 		$record_count = $this->db->get();
 		$row = $record_count->row();
 
@@ -54,6 +54,33 @@ class M_keluarga extends CI_Model
 
 		$this->CI->flexigrid->build_query(TRUE);
 
+		//Return all
+		return $return;
+	}
+
+	public function get_keluarga()
+	{
+		//Build contents query
+
+		$this->db->select('
+		tbl_keluarga.*,
+		tbl_penduduk.nama,
+		tbl_penduduk.nik,
+		ref_desa.nama_desa,
+		ref_kecamatan.nama_kecamatan,
+		ref_kab_kota.nama_kab_kota,
+		ref_provinsi.nama_provinsi
+		')->from($this->_table);
+
+		$this->db->join('tbl_penduduk', 'tbl_penduduk.id_penduduk = tbl_keluarga.id_kepala_keluarga');
+		$this->db->join('ref_desa', 'ref_desa.id_desa = tbl_keluarga.id_desa');
+		$this->db->join('ref_kecamatan', 'ref_kecamatan.id_kecamatan = tbl_keluarga.id_kecamatan');
+		$this->db->join('ref_kab_kota', 'ref_kab_kota.id_kab_kota = tbl_keluarga.id_kab_kota');
+		$this->db->join('ref_provinsi', 'ref_provinsi.id_provinsi = tbl_keluarga.id_provinsi');
+		$this->db->join('ref_status_penduduk', 'tbl_penduduk.id_status_penduduk = ref_status_penduduk.id_status_penduduk');
+		// $this->db->where('ref_status_penduduk.deskripsi', 'Tinggal Tetap');
+
+		$return = $this->db->get()->result_array();
 		//Return all
 		return $return;
 	}
@@ -523,6 +550,40 @@ class M_keluarga extends CI_Model
 		foreach ($records->result() as $row) {
 			$data[''] = '--Pilih--';
 			$data[$row->id_provinsi] = $row->nama_provinsi;
+		}
+		return ($data);
+	}
+
+	function get_kab_kota()
+	{
+		$this->db->where('id_kab_kota !=', '0');
+		$records = $this->db->get('ref_kab_kota');
+		$data = array();
+		foreach ($records->result() as $row) {
+			$data[''] = '--Pilih--';
+			$data[$row->id_kab_kota] = $row->nama_kab_kota;
+		}
+		return ($data);
+	}
+	function get_Kec()
+	{
+		$this->db->where('id_kecamatan !=', '0');
+		$records = $this->db->get('ref_kecamatan');
+		$data = array();
+		foreach ($records->result() as $row) {
+			$data[''] = '--Pilih--';
+			$data[$row->id_kecamatan] = $row->nama_kecamatan;
+		}
+		return ($data);
+	}
+	function get_desa2()
+	{
+		$this->db->where('id_desa !=', '0');
+		$records = $this->db->get('ref_desa');
+		$data = array();
+		foreach ($records->result() as $row) {
+			$data[''] = '--Pilih--';
+			$data[$row->id_desa] = $row->nama_desa;
 		}
 		return ($data);
 	}

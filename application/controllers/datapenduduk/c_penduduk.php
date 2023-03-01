@@ -326,7 +326,7 @@ class C_penduduk extends CI_Controller
 							'is_pkh' => $this->cekEnum($data['cells'][$i][37]), //cekEnum
 							'id_kelas_sosial' => $id_kelas_sosial,
 							'id_kepala_keluarga' => $id_penduduk,
-							'id_rt' => $id_rt,
+							// 'id_rt' => $id_rt,
 							'id_rw' => $id_rw,
 							'id_dusun' => $id_dusun,
 						);
@@ -570,6 +570,11 @@ class C_penduduk extends CI_Controller
 			$data['id_difabilitas'] = $this->m_keluarga->get_difabilitas();
 			//$data['id_kontrasepsi'] = $this->m_keluarga->get_kontrasepsi();
 			$data['id_status_keluarga'] = $this->m_keluarga->get_status_keluarga();
+			$data['id_provinsi'] = $this->m_keluarga->get_provinsi();
+			$data['id_kab_kota'] = $this->m_keluarga->get_kab_kota();
+			$data['id_kecamatan'] = $this->m_keluarga->get_Kec();
+			$data['id_desa'] = $this->m_keluarga->get_desa2();
+
 
 
 			$data['page_title'] = 'Edit Data Anggota';

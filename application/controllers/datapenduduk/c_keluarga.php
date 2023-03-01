@@ -26,7 +26,13 @@ class C_keluarga extends CI_Controller
 		$session['hasil'] = $this->session->userdata('logged_in');
 		$role = $session['hasil']->role;
 		if ($this->session->userdata('logged_in') and $role == 'Pengelola Data') {
-			$this->lists();
+
+			$data['page_title'] = 'Tampil Data Anggota';
+			$data['keluarga'] = $this->m_keluarga->get_keluarga();
+			$data['menu'] = $this->load->view('menu/v_pengelolaData', $data, TRUE);
+			$data['content'] = $this->load->view('keluarga/v_index', $data, TRUE);
+
+			$this->load->view('utama', $data);
 		} else
 			redirect('c_login', 'refresh');
 	}

@@ -44,6 +44,45 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 			</span>
 		</div>
 	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 control-label" for="id_provinsi">Provinsi </label>
+		<div class="col-md-3">
+			<?php $id = 'id="id_provinsi" class="form-control input-md"';
+			echo form_dropdown('id_provinsi', $id_provinsi, $result->id_provinsi, $id) ?>
+			<span class="help-block">
+			</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 control-label" for="id_kab_kota">Kab/Kota </label>
+		<div class="col-md-3">
+			<?php $id = 'id="id_kab_kota" class="form-control input-md"';
+			echo form_dropdown('id_kab_kota', $id_kab_kota, $result->id_kab_kota, $id) ?>
+			<span class="help-block">
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 control-label" for="id_kecamatan">Kecamatan </label>
+		<div class="col-md-3">
+			<?php $id = 'id="id_kecamatan" class="form-control input-md"';
+			echo form_dropdown('id_kecamatan', $id_kecamatan, $result->id_kecamatan, $id) ?>
+			<span class="help-block">
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 control-label" for="id_desa">Desa </label>
+		<div class="col-md-3">
+			<?php $id = 'id="id_desa" class="form-control input-md"';
+			echo form_dropdown('id_desa', $id_desa, $result->id_desa, $id) ?>
+			<span class="help-block">
+			</span>
+		</div>
+	</div>
+
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="tempat_lahir">Tempat/Tgl Lahir </label>
 		<div class="col-md-5">
@@ -197,18 +236,10 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 		</div>
 		<div class="form-group">
 			<label class="col-md-3 control-label" for="id_pekerjaan">Pekerjaan </label>
-			<div class="col-md-3">
+			<div class="col-md-9">
 				<?php $id = 'id="id_pekerjaan" class="form-control input-md" required';
 				echo form_dropdown('id_pekerjaan', $id_pekerjaan, $result->id_pekerjaan, $id) ?>
 				<span class="help-block"></span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-3 control-label" for="id_pekerjaan_ped">Potensi Ekonomi Desa </label>
-			<div class="col-md-3">
-				<?php $id = 'id="id_pekerjaan_ped" class="form-control input-md"';
-				echo form_dropdown('id_pekerjaan_ped', $id_pekerjaan_ped, $result->id_pekerjaan_ped, $id) ?>
-				<span class="help-block"><br></span>
 			</div>
 		</div>
 		<!--<div class="form-group">
@@ -268,15 +299,6 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 			<div class="col-md-9">
 				<?php $id = 'id="id_difabilitas" class="form-control input-md"';
 				echo form_dropdown('id_difabilitas', $id_difabilitas, $result->id_difabilitas, $id) ?>
-				<span class="help-block">
-				</span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-3 control-label" for="id_kontrasepsi">Kontrasepsi </label>
-			<div class="col-md-9">
-				<?php $id = 'id="id_kontrasepsi" class="form-control input-md"';
-				echo form_dropdown('id_kontrasepsi', $id_kontrasepsi, $result->id_kontrasepsi, $id) ?>
 				<span class="help-block">
 				</span>
 			</div>
@@ -355,7 +377,6 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 
 	button[type="submit"] {
 		margin-top: 10px;
-	}
 	}
 </style>
 <script src="<?php echo base_url(); ?>assetku/cropit/jquery.cropit.js"></script>
@@ -489,5 +510,90 @@ echo !empty($flashmessage) ? '<p class="message">' . $flashmessage . '</p>' : ''
 		$(".cropit-image-preview").reload();
 
 
+	});
+
+
+	$("#id_provinsi").change(function() {
+		var id_provinsi = document.getElementById("id_provinsi").value;
+		console.log(id_provinsi)
+
+		$.ajax({
+			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_kabupaten',
+			type: 'POST',
+			data: {
+				id_provinsi: id_provinsi
+			},
+			dataType: 'json',
+			success: function(data) {
+				// Kosongkan select kabupaten dan kecamatan
+				// $('#kabupaten').empty();
+				// $('#kecamatan').empty();
+
+				// Tampilkan select kabupaten dan reset valuenya menjadi kosong
+				$('#kabupaten').show();
+				// $('#kabupaten').append('<option value="">Pilih Kabupaten/Kota</option>');
+
+				// Tampilkan data kabupaten dalam select
+				$.each(data, function(key, value) {
+					$('#kabupaten').append('<option value="' + value.id_kab_kota + '">' + value.nama_kab_kota + '</option>');
+				});
+			}
+		});
+	});
+
+	// Ketika select kabupaten diubah, kirim data id_kabupaten ke controller menggunakan AJAX
+	$('#kabupaten').on('change', function() {
+		var id_kab_kota = $(this).val();
+		console.log(id_kab_kota)
+
+		$.ajax({
+			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_kecamatan',
+			type: 'POST',
+			data: {
+				id_kab_kota: id_kab_kota
+			},
+			dataType: 'json',
+			success: function(data) {
+				// Kosongkan select kecamatan
+				// $('#kecamatan').empty();
+
+				// Tampilkan select kecamatan dan reset valuenya menjadi kosong
+				$('#kecamatan').show();
+				// $('#kecamatan').append('<option value="">Pilih Kecamatan</option>');
+
+				// Tampilkan data kecamatan dalam select
+				$.each(data, function(key, value) {
+					$('#kecamatan').append('<option value="' + value.id_kecamatan + '">' + value.nama_kecamatan + '</option>');
+				});
+			}
+		});
+	});
+
+	// Ketika select kabupaten diubah, kirim data id_kabupaten ke controller menggunakan AJAX
+	$('#kecamatan').on('change', function() {
+		var id_kecamatan = $(this).val();
+		console.log(id_kecamatan)
+
+		$.ajax({
+			url: '<?php echo base_url(); ?>datapenduduk/c_keluarga/get_desa',
+			type: 'POST',
+			data: {
+				id_kecamatan: id_kecamatan
+			},
+			dataType: 'json',
+			success: function(data) {
+				// Kosongkan select kecamatan
+				// $('#kecamatan').empty();
+
+				// Tampilkan select kecamatan dan reset valuenya menjadi kosong
+				$('#desa').show();
+				// $('#desa').append('<option value="">Pilih desa</option>');
+
+				// Tampilkan data desa dalam select
+				$.each(data, function(key, value) {
+					$('#desa').append('<option value="' + value.id_desa + '">' + value.nama_desa + '</option>');
+				});
+			}
+		});
 	});
 </script>
